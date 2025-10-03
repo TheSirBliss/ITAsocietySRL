@@ -1,6 +1,9 @@
 // api/contact.ts
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+import { ContactFormEmail } from '../src/emails/ContactFormEmail'; // Importa il nostro template
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(
   req: VercelRequest,
@@ -12,37 +15,27 @@ export default async function handler(
 
   const { name, email, message } = req.body;
 
-  // 1. Configura il transporter di Nodemailer con le tue credenziali SMTP
-  const transporter = nodemailer.createTransport({
-    host: process.env.smtp.itasocietysrl.com,       // Es: smtp.tuoprovider.com
-    port: parseInt(process.env.SMTP_PORT || '465'), // Es: 465 (con SSL) o 587 (con TLS)
-    secure: process.env.SMTP_PORT === '465', // true per la porta 465, false per le altre
-    auth: {
-      user: process.env.info@itasocietysrl.com,     // La tua email: 
-      pass: process.env.AR1Pant0$Rancito0@TuttixTitta,     // La password della tua email
-    },
-  });
-
-  const mailOptions = {
-    from: `"ITAsociety Website" <${process.env.SMTP_USER}>`, // Mittente
-    to: process.env.SMTP_USER, // Destinatario (la tua email)
-    replyTo: email, // Permette di rispondere direttamente all'utente
-    subject: `New Contact Form Message from ${name}`,
-    text: `You have received a new message from:\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-    html: `<h3>New Contact Form Submission</h3>
-           <ul>
-             <li><strong>Name:</strong> ${name}</li>
-             <li><strong>Email:</strong> ${email}</li>
-           </ul>
-           <p><strong>Message:</strong></p>
-           <p>${message.replace(/\n/g, '<br>')}</p>`,
-  };
+  if (!name || !email || !message) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
 
   try {
-    await transporter.sendMail(mailOptions);
+    const { data, error } = await resend.emails.send({
+      from: 'ITAsociety Website <noreply@itasocietysrl.com>', // Usa un indirizzo noreply del tuo dominio verificato
+      to: ['info@itasocietysrl.com'], // L'email dove ricevi i messaggi
+      subject: `New Message from ${name}`,
+      reply_to: email,
+      react: ContactFormEmail({ name, email, message }), // Usa il componente React come template!
+    });
+
+    if (error) {
+      console.error({ error });
+      return res.status(500).json({ message: 'Failed to send message' });
+    }
+
     return res.status(200).json({ success: true, message: 'Message sent successfully' });
   } catch (error) {
-    console.error('Nodemailer error:', error);
-    return res.status(500).json({ success: false, message: 'Failed to send message' });
+    console.error(error);
+    return res.status(500).json({ message: 'An internal error occurred' });
   }
 }
