@@ -1,13 +1,11 @@
-// src/pages/Contact.tsx
-// FORCING UPDATE: 2025-10-03
-import React, { useState } from 'react';
+// src/components/Contact.tsx
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { motion } from "framer-motion";
 
-const Contact = () => {
+export const Contact = () => {
   const { toast } = useToast();
   const [status, setStatus] = useState("Send Message");
 
@@ -18,7 +16,7 @@ const Contact = () => {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      // QUESTA È LA RIGA CORRETTA:
+      // QUESTA È LA CORREZIONE FONDAMENTALE NEL FILE GIUSTO
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -51,47 +49,41 @@ const Contact = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="container mx-auto px-4 py-16"
-    >
-      <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
-          Get in Touch
-        </h1>
-        <p className="text-xl text-muted-foreground">
-          Have a project in mind, a question, or just want to say hello?
-          We'd love to hear from you.
-        </p>
-      </div>
+    <section id="contact" className="py-20 bg-background">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Contact Us</h2>
+          <p className="text-xl text-muted-foreground mt-4">
+            Have a project in mind or just want to say hello? We'd love to hear from you.
+          </p>
+        </div>
 
-      <div className="max-w-2xl mx-auto mt-12">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Input
-              name="name"
-              type="text"
-              placeholder="Your Name"
-              required
+            <Input 
+              type="text" 
+              name="name" 
+              placeholder="Your Name" 
+              required 
               className="bg-input"
             />
-            <Input
-              name="email"
-              type="email"
-              placeholder="Your Email"
-              required
+            <Input 
+              type="email" 
+              name="email" 
+              placeholder="Your Email" 
+              required 
               className="bg-input"
             />
           </div>
-          <Textarea
-            name="message"
-            placeholder="Your Message"
-            rows={6}
-            required
+          
+          <Textarea 
+            name="message" 
+            placeholder="Your Message" 
+            required 
+            rows={6} 
             className="bg-input"
           />
+          
           <div className="text-center">
             <Button type="submit" variant="hero" size="lg" disabled={status === "Sending..."}>
               {status}
@@ -99,8 +91,6 @@ const Contact = () => {
           </div>
         </form>
       </div>
-    </motion.div>
+    </section>
   );
 };
-
-export default Contact;
