@@ -12,25 +12,17 @@ export const ContactFormEmail: React.FC<Readonly<ContactFormEmailProps>> = ({ na
   <Html>
     <Head />
     <Preview>New message from your ITAsociety website</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Heading style={heading}>New Contact Form Submission</Heading>
-        <Text style={paragraph}>You received a new message from your website's contact form.</Text>
-        <Hr style={hr} />
-        <Text style={paragraph}><strong>From:</strong> {name}</Text>
-        <Text style={paragraph}><strong>Email:</strong> <a href={`mailto:${email}`}>{email}</a></Text>
-        <Hr style={hr} />
-        <Heading as="h2" style={subheading}>Message:</Heading>
-        <Text style={paragraph}>{message}</Text>
+    <Body style={{ backgroundColor: '#ffffff', fontFamily: 'Arial, sans-serif' }}>
+      <Container style={{ margin: '0 auto', padding: '20px', width: '580px', border: '1px solid #eaeaea', borderRadius: '5px' }}>
+        <Heading style={{ fontSize: '24px', color: '#333333' }}>New Contact Form Submission</Heading>
+        <Text style={{ fontSize: '16px', color: '#555555' }}>You received a new message from your website's contact form.</Text>
+        <Hr style={{ borderColor: '#eaeaea', margin: '20px 0' }} />
+        <Text style={{ fontSize: '16px', color: '#555555' }}><strong>From:</strong> {name}</Text>
+        <Text style={{ fontSize: '16px', color: '#555555' }}><strong>Email:</strong> <a href={`mailto:${email}`} style={{ color: '#007bff' }}>{email}</a></Text>
+        <Hr style={{ borderColor: '#eaeaea', margin: '20px 0' }} />
+        <Heading as="h2" style={{ fontSize: '20px', color: '#333333' }}>Message:</Heading>
+        <Text style={{ fontSize: '16px', color: '#555555', whiteSpace: 'pre-wrap' }}>{message}</Text>
       </Container>
     </Body>
   </Html>
 );
-
-// Stili
-const main = { backgroundColor: "#f6f9fc", fontFamily: "Arial, sans-serif" };
-const container = { margin: "0 auto", padding: "20px 0 48px", width: "580px" };
-const heading = { fontSize: "24px", lineHeight: "1.3", fontWeight: "700", color: "#484848" };
-const subheading = { fontSize: "18px", lineHeight: "1.3", fontWeight: "700", color: "#484848" };
-const paragraph = { fontSize: "16px", lineHeight: "1.4", color: "#484848" };
-const hr = { borderColor: "#cccccc", margin: "20px 0" };
