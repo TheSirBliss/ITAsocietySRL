@@ -36,4 +36,42 @@ const PrivacyPolicy = () => (
       Usage Data is collected automatically when using the Service. This may include information such as your device's Internet Protocol address (e.g., IP address), 
       browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, 
       and other diagnostic data.
-    </
+    </p>
+
+    <h3>Use of Your Personal Data</h3>
+    <p>The Company may use Personal Data for the following purposes:</p>
+    <ul>
+      <li><strong>To provide and maintain our Service:</strong> including to monitor the usage of our Service.</li>
+      <li><strong>To manage your account:</strong> to manage your registration as a user of the Service.</li>
+      <li><strong>To contact you:</strong> To contact you by email, telephone calls, SMS, or other equivalent forms of electronic communication.</li>
+      <li><strong>To provide you with news:</strong> special offers and general information about other goods, services, and events which we offer.</li>
+      <li><strong>To manage your requests:</strong> To attend and manage your requests to us.</li>
+    </ul>
+
+    <h2>3. Retention of Your Personal Data</h2>
+    <p>
+      The Company will retain your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. 
+      We will retain and use your Personal Data to the extent necessary to comply with our legal obligations, resolve disputes, and enforce our legal agreements and policies.
+    </p>
+
+    <h2>4. Your Data Protection Rights</h2>
+    <p>
+      We are committed to ensuring you are fully aware of all of your data protection rights. Every user is entitled to the following, as specified in our GDPR Compliance statement.
+    </p>
+
+    <h2>5. Changes to this Privacy Policy</h2>
+    <p>
+      We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. 
+      You are advised to review this Privacy Policy periodically for any changes.
+    </p>
+
+    <h2>6. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, you can contact us:</p>
+    <ul>
+      <li>By email: <strong>info@itasocietysrl.com</strong></li>
+      <li>By visiting this page on our website: <strong>https://www.itasocietysrl.com/#contact</strong></li>
+    </ul>
+  </div>
+);
+
+export default PrivacyPolicy;
