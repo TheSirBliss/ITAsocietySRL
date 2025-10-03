@@ -1,75 +1,104 @@
-import React, { useState } from "react";
+// src/pages/Contact.tsx
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { motion } from "framer-motion";
 
-export default function Contact(): JSX.Element {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [success, setSuccess] = useState(false);
-  const api = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const Contact = () => {
+  const { toast } = useToast();
+  const [status, setStatus] = useState("Send Message");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus("Sending...");
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
     try {
-      const res = await fetch(`${api}/api/contact`, {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-      if (res.ok) {
-        setSuccess(true);
-        setForm({ name: "", email: "", message: "" });
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        setStatus("Send Message");
+        toast({
+          title: "Message Sent! ✅",
+          description: "Thank you for getting in touch. We'll reply shortly.",
+        });
+        (event.target as HTMLFormElement).reset();
       } else {
-        const err = await res.json();
-        alert(err?.error || "Errore");
+        throw new Error(responseData.message || 'An unknown error occurred.');
       }
-    } catch (err) {
-      console.error(err);
-      alert("Errore di rete");
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setStatus("Send Message");
+      toast({
+        title: "Something went wrong! ❌",
+        description: "Please try again or contact us directly via email.",
+        variant: "destructive",
+      });
     }
   };
 
   return (
-    <section className="py-12 max-w-2xl mx-auto px-4">
-      <h2 className="text-xl font-semibold mb-4">Contattaci</h2>
-      {success ? (
-        <div className="p-4 bg-green-50 border border-green-200 rounded">Messaggio inviato, grazie.</div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-            placeholder="Nome"
-            className="w-full p-2 border rounded"
-            aria-label="Nome"
-          />
-          <input
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            placeholder="Email"
-            className="w-full p-2 border rounded"
-            aria-label="Email"
-            type="email"
-          />
-          <textarea
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="container mx-auto px-4 py-16"
+    >
+      <div className="max-w-3xl mx-auto text-center">
+        <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+          Get in Touch
+        </h1>
+        <p className="text-xl text-muted-foreground">
+          Have a project in mind, a question, or just want to say hello?
+          We'd love to hear from you.
+        </p>
+      </div>
+
+      <div className="max-w-2xl mx-auto mt-12">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input
+              name="name"
+              type="text"
+              placeholder="Your Name"
+              required
+              className="bg-input"
+            />
+            <Input
+              name="email"
+              type="email"
+              placeholder="Your Email"
+              required
+              className="bg-input"
+            />
+          </div>
+          <Textarea
             name="message"
-            value={form.message}
-            onChange={handleChange}
-            required
-            placeholder="Messaggio"
-            className="w-full p-2 border rounded"
-            aria-label="Messaggio"
+            placeholder="Your Message"
             rows={6}
+            required
+            className="bg-input"
           />
-          <button type="submit" className="px-4 py-2 bg-primary text-white rounded" aria-label="Invia messaggio">
-            Invia
-          </button>
+          <div className="text-center">
+            <Button type="submit" variant="hero" size="lg" disabled={status === "Sending..."}>
+              {status}
+            </Button>
+          </div>
         </form>
-      )}
-    </section>
+      </div>
+    </motion.div>
   );
-}
+};
+
+export default Contact;
