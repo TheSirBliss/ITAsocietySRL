@@ -124,25 +124,10 @@
   }
 }
 
+/* This is the corrected block */
 @layer base {
-  * {
-    @apply border-border;
-  }
-
-  html {
-    /* Aggiunto per fixare lo scroll degli anchor link */
-    scroll-padding-top: 5rem; /* Un po' più dell'altezza dell'header (4rem) */
-    @apply scroll-smooth; /* Rende lo scorrimento più fluido */
-  }
-
-  * {
-    @apply border-border;
-  }
-
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
-} 
+}
