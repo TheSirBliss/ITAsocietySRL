@@ -17,6 +17,8 @@ const Contact = () => {
     const data = Object.fromEntries(formData.entries());
 
     try {
+      // Questo è il punto cruciale: invia la richiesta a un percorso relativo,
+      // che Vercel reindirizzerà alla tua funzione serverless in /api/contact.
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
