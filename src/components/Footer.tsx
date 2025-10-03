@@ -53,25 +53,30 @@ export const Footer = () => {
   const [newsletterStatus, setNewsletterStatus] = useState("Subscribe");
 
   const handleNewsletterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setNewsletterStatus("Subscribing...");
-    const formData = new FormData(event.currentTarget);
-    formData.append("access_key", "LA_TUA_CHIAVE_WEB3FORMS_QUI"); // <-- RICORDA DI METTERE LA TUA CHIAVE
-    formData.append("subject", "New Newsletter Subscription from ITAsociety Website");
+  event.preventDefault();
+  setNewsletterStatus("Subscribing...");
+  const formData = new FormData(event.currentTarget);
+  const email = formData.get("email");
 
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: formData });
-      const data = await response.json();
-      if (data.success) {
-        toast({ title: "Successfully Subscribed! 🎉", description: "Thank you for joining our mailing list." });
-        (event.target as HTMLFormElement).reset();
-      } else { throw new Error(data.message); }
-    } catch (error) {
-      toast({ title: "Subscription Failed", description: "Something went wrong. Please try again.", variant: "destructive" });
-    } finally {
-      setNewsletterStatus("Subscribe");
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await response.json();
+    if (data.success) {
+      toast({ title: "Successfully Subscribed! 🎉", description: "Thank you for joining our mailing list." });
+      (event.target as HTMLFormElement).reset();
+    } else {
+      throw new Error("Subscription failed on server");
     }
-  };
+  } catch (error) {
+    toast({ title: "Subscription Failed", description: "Something went wrong. Please try again.", variant: "destructive" });
+  } finally {
+    setNewsletterStatus("Subscribe");
+  }
+};
 
   return (
     <footer className="bg-background border-t border-border">
