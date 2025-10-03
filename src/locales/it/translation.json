@@ -1,0 +1,64 @@
+{
+  "services": {
+    "images": {
+      "title": "Immagini Personalizzabili",
+      "short": "Immagini digitali su misura per branding e campagne.",
+      "long": "Creiamo immagini personalizzate adattate all’identità del tuo brand. Dai contenuti social alla grafica professionale, garantiamo impatto visivo e coerenza."
+    },
+    "gif": {
+      "title": "GIF Personalizzate",
+      "short": "GIF accattivanti per marketing e community.",
+      "long": "GIF animate pensate per catturare l’attenzione e coinvolgere le community. Perfette per campagne social, meme o branding aziendale."
+    },
+    "vrar": {
+      "title": "Esperienze VR/AR",
+      "short": "Progetti immersivi in realtà virtuale e aumentata.",
+      "long": "Creiamo ambienti VR e AR per rilassamento, formazione o intrattenimento. Coinvolgi il pubblico con esperienze 3D interattive."
+    },
+    "lore": {
+      "title": "Creazione di Lore",
+      "short": "World-building per giochi, NFT e brand.",
+      "long": "Creiamo narrazioni che danno profondità a brand, collezioni NFT o giochi. Dai miti alle storie, costruiamo universi immersivi."
+    },
+    "website": {
+      "title": "Siti Web Autogenerati",
+      "short": "Siti professionali con AI e auto-deploy.",
+      "long": "Realizziamo siti web moderni e scalabili con supporto AI. Dal design all’hosting automatico, garantiamo performance e SEO."
+    },
+    "marketing": {
+      "title": "Campagne Marketing",
+      "short": "Pubblicità e strategie di crescita complete.",
+      "long": "Progettiamo e realizziamo campagne digitali con advertising, analytics e growth hacking. Massimizziamo visibilità e ROI."
+    },
+    "meme": {
+      "title": "Meme",
+      "short": "Meme virali per rafforzare il brand.",
+      "long": "Meme creativi allineati alla tua identità. Humor + strategia per attrazione organica."
+    },
+    "ghostwriting": {
+      "title": "Ghostwriting",
+      "short": "Testi professionali e storytelling.",
+      "long": "Servizi di ghostwriting per aziende e creatori. Da articoli a discorsi, scriviamo testi che coinvolgono e convertono."
+    },
+    "videogames": {
+      "title": "Videogiochi Personalizzati",
+      "short": "Giochi 2D su misura.",
+      "long": "Creiamo giochi 2D che intrattengono, educano e promuovono engagement. Dai mini-giochi brandizzati alle esperienze NFT."
+    },
+    "songs": {
+      "title": "Canzoni Personalizzate",
+      "short": "Musica e colonne sonore su misura.",
+      "long": "Composizione musicale adattata al tuo progetto o brand. Da jingle a tracce complete, offriamo identità sonora unica."
+    },
+    "videos": {
+      "title": "Video Animati",
+      "short": "Produzione di video animati su misura.",
+      "long": "Realizziamo video animati che danno vita al tuo messaggio. Perfetti per pubblicità, storytelling o intrattenimento."
+    },
+    "stickers": {
+      "title": "Sticker Personalizzati",
+      "short": "Sticker digitali per branding e community.",
+      "long": "Sticker divertenti e brandizzati per app, community e campagne. Dai pacchetti Telegram agli sticker NFT da collezione."
+    }
+  }
+}
