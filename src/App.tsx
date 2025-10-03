@@ -19,6 +19,12 @@ const ServicesList = lazy(() => import("./pages/ServicesList"));
 const ServiceDetail = lazy(() => import("./pages/ServiceDetail"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Gallery = lazy(() => import("./pages/Gallery"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const CookiePolicy = lazy(() => import("./pages/CookiePolicy")); 
+const GDPRCompliance = lazy(() => import("./pages/GDPRCompliance")); 
+
+
 
 const queryClient = new QueryClient();
 
@@ -46,6 +52,10 @@ const App: React.FC = () => {
                 <Route path="/services/:id" element={<ServiceDetail />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/gallery" element={<Gallery />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+                <Route path="/cookie-policy" element={<CookiePolicy />} /> 
+                <Route path="/gdpr-compliance" element={<GDPRCompliance />} /> 
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
