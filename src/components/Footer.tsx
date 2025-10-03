@@ -1,7 +1,8 @@
+// src/components/Footer.tsx
+import React, { useState } from "react"; // 1. AGGIUNTO React e useState
+import { Link } from "react-router-dom";    // 2. AGGIUNTO Link per la navigazione
+import { useToast } from "@/components/ui/use-toast"; // 3. AGGIUNTO useToast per le notifiche
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
 import { 
   Mail, 
   Phone, 
@@ -38,6 +39,7 @@ const company = [
   { name: "Partners", href: "#partners" },
 ];
 
+// 4. LINK LEGALI AGGIORNATI PER LE PAGINE REALI
 const legal = [
   { name: "Privacy Policy", href: "/privacy-policy" },
   { name: "Terms of Service", href: "/terms-of-service" },
@@ -46,6 +48,7 @@ const legal = [
 ];
 
 export const Footer = () => {
+  // 5. AGGIUNTA LA LOGICA PER LA NEWSLETTER
   const { toast } = useToast();
   const [newsletterStatus, setNewsletterStatus] = useState("Subscribe");
 
@@ -53,7 +56,7 @@ export const Footer = () => {
     event.preventDefault();
     setNewsletterStatus("Subscribing...");
     const formData = new FormData(event.currentTarget);
-    formData.append("access_key", "LA_TUA_ACCESS_KEY_DI_WEB3FORMS"); // <-- USA LA TUA CHIAVE QUI
+    formData.append("access_key", "LA_TUA_CHIAVE_WEB3FORMS_QUI"); // <-- RICORDA DI METTERE LA TUA CHIAVE
     formData.append("subject", "New Newsletter Subscription from ITAsociety Website");
 
     try {
@@ -69,6 +72,7 @@ export const Footer = () => {
       setNewsletterStatus("Subscribe");
     }
   };
+
   return (
     <footer className="bg-background border-t border-border">
       {/* Newsletter Section */}
@@ -81,12 +85,13 @@ export const Footer = () => {
             <p className="text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
               Receive exclusive insights, case studies, and the latest news from the world of enterprise AI.
             </p>
+            {/* 6. NEWSLETTER TRASFORMATA IN UN FORM FUNZIONANTE */}
             <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row max-w-md mx-auto space-y-4 sm:space-y-0 sm:space-x-4">
               <input
                 type="email"
-                name="email" // <-- Aggiunto
+                name="email"
                 placeholder="Your Professional Email"
-                required // <-- Aggiunto
+                required
                 className="flex-1 px-4 py-3 bg-background/20 backdrop-blur-sm border border-border/50 rounded-md text-foreground placeholder-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <Button type="submit" variant="hero" className="group" disabled={newsletterStatus === "Subscribing..."}>
@@ -116,7 +121,6 @@ export const Footer = () => {
               and accelerates innovation.
             </p>
             
-            {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Mail className="w-4 h-4 text-primary" />
@@ -132,17 +136,10 @@ export const Footer = () => {
               </div>
             </div>
 
-            {/* Social Links */}
             <div className="flex space-x-4 mt-6">
-              <Button variant="ghost" size="icon" className="hover:bg-primary/20">
-                <Linkedin className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="hover:bg-primary/20">
-                <Twitter className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="hover:bg-primary/20">
-                <Github className="w-5 h-5" />
-              </Button>
+              <Button variant="ghost" size="icon" className="hover:bg-primary/20"><Linkedin className="w-5 h-5" /></Button>
+              <Button variant="ghost" size="icon" className="hover:bg-primary/20"><Twitter className="w-5 h-5" /></Button>
+              <Button variant="ghost" size="icon" className="hover:bg-primary/20"><Github className="w-5 h-5" /></Button>
             </div>
           </div>
 
@@ -169,31 +166,17 @@ export const Footer = () => {
             <h4 className="text-lg font-semibold text-foreground mb-6">Azienda</h4>
             <ul className="space-y-3">
               {company.map((item) => (
-                <li key={item.name}>
-                  <a 
-                    href={item.href}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
-                  >
-                    {item.name}
-                  </a>
-                </li>
+                <li key={item.name}><a href={item.href} className="text-muted-foreground hover:text-primary transition-colors duration-300">{item.name}</a></li>
               ))}
             </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links (Prodotti) - MANTENUTO INTATTO */}
           <div>
             <h4 className="text-lg font-semibold text-foreground mb-6">Prodotti</h4>
             <ul className="space-y-3">
               {quickLinks.map((item) => (
-                <li key={item.name}>
-                  <a 
-                    href={item.href}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
-                  >
-                    {item.name}
-                  </a>
-                </li>
+                <li key={item.name}><a href={item.href} className="text-muted-foreground hover:text-primary transition-colors duration-300">{item.name}</a></li>
               ))}
             </ul>
           </div>
@@ -202,18 +185,15 @@ export const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold text-foreground mb-6">Legale</h4>
             <ul className="space-y-3">
+              {/* 7. USO DI <Link> PER LE PAGINE LEGALI */}
               {legal.map((item) => (
                 <li key={item.name}>
-                  <Link
-                    to={item.href}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
-                  >
-                    {item.name}
-                  </Link>
+                  <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors duration-300">{item.name}</Link>
                 </li>
               ))}
             </ul>
           </div>
+        </div>
 
         {/* Bottom Bar */}
         <div className="border-t border-border mt-12 pt-8">
