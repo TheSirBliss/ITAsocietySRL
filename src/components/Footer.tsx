@@ -1,4 +1,7 @@
 import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 import { 
   Mail, 
   Phone, 
@@ -36,13 +39,36 @@ const company = [
 ];
 
 const legal = [
-  { name: "Privacy Policy", href: "#privacy" },
-  { name: "Terms of Service", href: "#terms" },
-  { name: "Cookie Policy", href: "#cookies" },
-  { name: "GDPR Compliance", href: "#gdpr" },
+  { name: "Privacy Policy", href: "/privacy-policy" },
+  { name: "Terms of Service", href: "/terms-of-service" },
+  { name: "Cookie Policy", href: "/cookie-policy" },
+  { name: "GDPR Compliance", href: "/gdpr-compliance" },
 ];
 
 export const Footer = () => {
+  const { toast } = useToast();
+  const [newsletterStatus, setNewsletterStatus] = useState("Subscribe");
+
+  const handleNewsletterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setNewsletterStatus("Subscribing...");
+    const formData = new FormData(event.currentTarget);
+    formData.append("access_key", "LA_TUA_ACCESS_KEY_DI_WEB3FORMS"); // <-- USA LA TUA CHIAVE QUI
+    formData.append("subject", "New Newsletter Subscription from ITAsociety Website");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: formData });
+      const data = await response.json();
+      if (data.success) {
+        toast({ title: "Successfully Subscribed! 🎉", description: "Thank you for joining our mailing list." });
+        (event.target as HTMLFormElement).reset();
+      } else { throw new Error(data.message); }
+    } catch (error) {
+      toast({ title: "Subscription Failed", description: "Something went wrong. Please try again.", variant: "destructive" });
+    } finally {
+      setNewsletterStatus("Subscribe");
+    }
+  };
   return (
     <footer className="bg-background border-t border-border">
       {/* Newsletter Section */}
@@ -55,17 +81,19 @@ export const Footer = () => {
             <p className="text-lg text-foreground/80 mb-8 max-w-2xl mx-auto">
               Receive exclusive insights, case studies, and the latest news from the world of enterprise AI.
             </p>
-            <div className="flex flex-col sm:flex-row max-w-md mx-auto space-y-4 sm:space-y-0 sm:space-x-4">
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row max-w-md mx-auto space-y-4 sm:space-y-0 sm:space-x-4">
               <input
                 type="email"
+                name="email" // <-- Aggiunto
                 placeholder="Your Professional Email"
+                required // <-- Aggiunto
                 className="flex-1 px-4 py-3 bg-background/20 backdrop-blur-sm border border-border/50 rounded-md text-foreground placeholder-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary"
               />
-              <Button variant="hero" className="group">
-                Subscribe
+              <Button type="submit" variant="hero" className="group" disabled={newsletterStatus === "Subscribing..."}>
+                {newsletterStatus}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -176,17 +204,16 @@ export const Footer = () => {
             <ul className="space-y-3">
               {legal.map((item) => (
                 <li key={item.name}>
-                  <a 
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     className="text-muted-foreground hover:text-primary transition-colors duration-300"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
-        </div>
 
         {/* Bottom Bar */}
         <div className="border-t border-border mt-12 pt-8">
